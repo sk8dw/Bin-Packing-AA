@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{float}
+
+% ---------- Metadata ----------
+\title{An Example LaTeX Document}
+\author{ChatGPT basically}
+\date{\today}
+
+% ---------- Document ----------
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document demonstrates a moderately sized \LaTeX{} project,
+including equations, tables, figures, references, and structure.
+It exists so your PDF viewer finally has something to do.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ---------- Section ----------
+\section{Introduction}
+
+\LaTeX{} is a document preparation system designed for producing
+high-quality technical and scientific documents.
+Unlike word processors, it rewards precision and punishes improvisation.
+
+This document is organized as follows:
+Section~\ref{sec:math} covers mathematics,
+Section~\ref{sec:tables} introduces tables,
+and Section~\ref{sec:figures} deals with figures.
+
+% ---------- Math ----------
+\section{Mathematics}
+\label{sec:math}
+
+Inline math looks like this: \( a^2 + b^2 = c^2 \).
+
+Displayed equations look like this:
+
+\begin{equation}
+E = mc^2
+\label{eq:einstein}
+\end{equation}
+
+Equation~\ref{eq:einstein} is suspiciously popular.
+
+You can also align equations:
+
+\begin{align}
+f(x) &= x^2 + 2x + 1 \\
+     &= (x + 1)^2
+\end{align}
+
+% ---------- Lists ----------
+\section{Lists}
+
+Unordered list:
+\begin{itemize}
+  \item LaTeX compiles
+  \item Errors are cryptic
+  \item PDFs appear eventually
+\end{itemize}
+
+Ordered list:
+\begin{enumerate}
+  \item Write code
+  \item Compile
+  \item Fix errors
+  \item Repeat
+\end{enumerate}
+
+% ---------- Tables ----------
+\section{Tables}
+\label{sec:tables}
+
+Tables should never look like spreadsheets.
+
+\begin{table}[H]
+\centering
+\caption{Example Table}
+\begin{tabular}{lcc}
+\toprule
+Item & Value A & Value B \\
+\midrule
+Alpha & 10 & 20 \\
+Beta  & 15 & 30 \\
+Gamma & 42 & 84 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------- Figures ----------
+\section{Figures}
+\label{sec:figures}
+
+Figures require image files.
+If the file does not exist, LaTeX will complain loudly.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{example-image}
+\caption{Placeholder figure provided by LaTeX}
+\end{figure}
+
+If that image fails, install the package `mwe`, or comment this section out.
+
+% ---------- References ----------
+\section{References}
+
+You can include links like this:
+\href{https://www.latex-project.org}{The \LaTeX{} Project Website}
+
+Manual references work fine for now:
+\begin{thebibliography}{9}
+
+\bibitem{knuth}
+Donald E. Knuth,
+\textit{The \TeX book},
+Addison-Wesley, 1984.
+
+\end{thebibliography}
+
+% ---------- Conclusion ----------
+\section{Conclusion}
+
+You now have:
+\begin{itemize}
+  \item a non-trivial LaTeX document
+  \item multiple sections
+  \item cross-references
+  \item real structure
+\end{itemize}
+
+If this compiles successfully, your setup is finally correct.
+If not, LaTeX is still angry about something specific and will tell you.
+
+\end{document}
