@@ -22,7 +22,7 @@ Velicu Alexandru-Stefan\inst{1}}
 \maketitle
 %
 \begin{abstract}
-In această lucrare am abordat problema NP-complete Bin-Packing. Aceasta presupune că avem n obiecte, fiecare de o anumită dimensiune, și câteva coșuri de gunoi de capacitate egală. Vrem să repartizăm obiectele în coșurile de gunoi, folosind cât mai puține coșuri posibil. Desigur, 
+In această lucrare am abordat problema NP-complete Bin-Packing. Aceasta presupune că avem n obiecte, fiecare de o anumită dimensiune, și câteva coșuri de gunoi de capacitate egală. Vrem să repartizăm obiectele în coșurile de gunoi, folosind cât mai puține coșuri posibil. Desigur,
 dimensiunea totală a obiectelor repartizate într-un coș de gunoi nu trebuie să depășească capacitatea acestuia. Am efectuat si o serie de teste care sa confirme corectitudinea si eficacitatea problemei.
 
 \keywords{NP-complete  \and Bin-Packing \and Grafuri.}
@@ -44,7 +44,7 @@ Se identifica $k \in \mathbb{N}$ și o funcție de asignare \[ f : \{1, \dots, n
 \subsection{Heuristici pentru Bin Packing}
 
 \subsubsection{Ipoteza}
-Problema de bin packing este NP-hard, deci este improbabil să existe un algoritm polinomial care să producă întotdeauna soluția optimă.  
+Problema de bin packing este NP-hard, deci este improbabil să existe un algoritm polinomial care să producă întotdeauna soluția optimă.
 Din acest motiv, folosim \emph{heuristici} care oferă soluții bune, de obicei apropiate de optim.
 
 \subsubsection{Algoritmul Next-Fit (NF)}
@@ -69,31 +69,31 @@ Fie $M$ numărul minim de bin-uri necesare pentru o instanță $I$.
 \end{theorem}
 
 \begin{proof}
-	Fie $s(B_i)$ suma dimensiunilor obiectelor din bin-ul $B_i$ în soluția NF.  
+	Fie $s(B_i)$ suma dimensiunilor obiectelor din bin-ul $B_i$ în soluția NF.
 	Pentru orice doi biți consecutivi $B_j$ și $B_{j+1}$ avem:
-	
-	
+
+
 	\[
 	s(B_j) + s(B_{j+1}) > 1.
 	\]
-	
-	
+
+
 	Dacă NF folosește $k$ bin-uri (presupunem $k$ par), atunci:
-	
-	
+
+
 	\[
 	\sum_{i=1}^{k} s(B_i) > \frac{k}{2}.
 	\]
-	
-	
+
+
 	Dar suma totală a obiectelor este $\le M$, deci:
-	
-	
+
+
 	\[
 	\frac{k}{2} < M \quad \Rightarrow \quad k < 2M.
 	\]
-	
-	
+
+
 \end{proof}
 
 \paragraph{Limită inferioară pentru Next-Fit}
@@ -162,7 +162,7 @@ este echivalentă: ni se dau multe grinzi de lungime egală (să zicem 1 metru) 
 
 \subsection{Aplicarea problemei \textit{Bin Packing} la realizarea unui mix-tape}
 
-Problema realizării unui \emph{mix-tape} poate fi modelată în mod natural ca o instanță a problemei clasice de \textit{bin packing}. 
+Problema realizării unui \emph{mix-tape} poate fi modelată în mod natural ca o instanță a problemei clasice de \textit{bin packing}.
 În acest context:
 
 \begin{itemize}
@@ -205,8 +205,8 @@ Aceasta este exact formularea problemei de \textit{bin packing}.
 
 \subsubsection{Interpretare intuitivă}
 
-Realizarea unui mix-tape presupune alegerea unui set de melodii care să încapă într-o durată fixă. 
-Dacă numărul melodiilor este mare sau dacă se dorește realizarea mai multor mixuri, apare necesitatea împărțirii lor în mai multe casete. 
+Realizarea unui mix-tape presupune alegerea unui set de melodii care să încapă într-o durată fixă.
+Dacă numărul melodiilor este mare sau dacă se dorește realizarea mai multor mixuri, apare necesitatea împărțirii lor în mai multe casete.
 Astfel, problema devine:
 
 \begin{quote}
@@ -306,9 +306,14 @@ S_{\text{triplet}} = \frac{\sum a_i}{N}
 
 \subsection{Implicație}
 
-Dacă 3-Partition are soluție $\Rightarrow$ putem grupa elementele în $N$ triplete de sumă $C$ $\Rightarrow$ fiecare triplet intră într-un bin $\Rightarrow$ Bin Packing are soluție cu $K = N$.
+{\Large "$\Leftarrow$":}
 
-Analog, dacă Bin Packing are soluție cu $K = N$ și capacitate $C$, iar suma totală este $N \cdot C$, atunci fiecare bin este umplut exact cu $C$ $\Rightarrow$ fiecare bin conține exact 3 elemente $\Rightarrow$ avem o soluție pentru 3-Partition.
+{\indent Dacă 3-Partition are soluție $\Rightarrow$ putem grupa elementele în $N$ triplete de sumă $C$ $\Rightarrow$ fiecare triplet intră într-un bin, ocupându-l în totalitate $\Rightarrow$ Bin Packing are soluție cu $K = N$.}
+
+
+\noindent {\Large "$\Rightarrow$":}
+
+Analog, dacă Bin Packing are soluție cu $K = N$ și capacitate $C$, iar suma totală este $N \cdot C$, atunci fiecare bin este umplut cu exact $C$, iar fiecare bin conține exact 3 elemente $\Rightarrow$ avem o soluție pentru 3-Partition.
 
 \subsection{Concluzie}
 
@@ -320,6 +325,6 @@ Analog, dacă Bin Packing are soluție cu $K = N$ și capacitate $C$, iar suma t
 
 
 
-\textbf{Bin Packing este NP-complet.}
+\textbf{Bin Packing (decizie) este NP-completă.}
 
 \end{document}
