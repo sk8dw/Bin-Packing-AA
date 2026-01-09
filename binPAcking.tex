@@ -258,6 +258,8 @@ Construim o instanță de Bin Packing pornind de la Partition:
 	\item $K = 2$
 \end{itemize}
 
+{\Large ''$\Rightarrow$'':}
+
 Dacă Partition are soluție, atunci există două submulțimi $A_1$ și $A_2$ cu sume egale:
 
 
@@ -266,7 +268,9 @@ Dacă Partition are soluție, atunci există două submulțimi $A_1$ și $A_2$ c
 \]
 
 
-$\Rightarrow$ putem distribui elementele în două binuri de capacitate $C$ $\Rightarrow$ Bin Packing = TRUE.
+Putem, deci, distribui elementele în exact două binuri de capacitate $C$ $\Rightarrow$ Bin Packing = TRUE.
+
+{\Large ''$\Leftarrow$'':}
 
 Analog, dacă Bin Packing are soluție cu $K = 2$ și $C = \frac{\sum a_i}{2}$, atunci cele două binuri sunt umplute exact $\Rightarrow$ sumele sunt egale $\Rightarrow$ Partition = TRUE.
 
@@ -306,7 +310,7 @@ S_{\text{triplet}} = \frac{\sum a_i}{N}
 
 \subsection{Implicație}
 
-{\Large "$\Leftarrow$":}
+{\Large ''$\Leftarrow$'':}
 
 {\indent Dacă 3-Partition are soluție $\Rightarrow$ putem grupa elementele în $N$ triplete de sumă $C$ $\Rightarrow$ fiecare triplet intră într-un bin, ocupându-l în totalitate $\Rightarrow$ Bin Packing are soluție cu $K = N$.}
 
