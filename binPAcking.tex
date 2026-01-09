@@ -1,0 +1,325 @@
+
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Bin-Packing}
+
+\author{Enache Stephan-Cristian\and
+Ravariu Maria-Antonia\and
+Velicu Alexandru-Stefan\inst{1}}
+%
+\authorrunning{A. Ravariu, C. Enache, A. Velicu}
+
+\institute{Universitatea Nationala de Stiinta si Tehnologie Politehnica Bucuresti \\
+\url {https://upb.ro/}}
+%
+\maketitle
+%
+\begin{abstract}
+In această lucrare am abordat problema NP-complete Bin-Packing. Aceasta presupune că avem n obiecte, fiecare de o anumită dimensiune, și câteva coșuri de gunoi de capacitate egală. Vrem să repartizăm obiectele în coșurile de gunoi, folosind cât mai puține coșuri posibil. Desigur, 
+dimensiunea totală a obiectelor repartizate într-un coș de gunoi nu trebuie să depășească capacitatea acestuia. Am efectuat si o serie de teste care sa confirme corectitudinea si eficacitatea problemei.
+
+\keywords{NP-complete  \and Bin-Packing \and Grafuri.}
+\end{abstract}
+%
+%
+%
+\section{Introducere}
+\subsection{Descrierea problemei}
+Problema Bin-Packing este o problemă de optimizare în care articole de dimensiuni diferite trebuie ambalate într-un număr finit de containere, fiecare cu o capacitate fixă, astfel încât să se minimizeze numărul de containere utilizate. Această problemă are diverse aplicații, cum ar fi încărcarea containerelor, programarea sarcinilor și plasarea datelor pe mai multe discuri.
+
+\subsubsection{Definitia problemei}
+Având n articole cu greutăți diferite și containere cu capacitate c, obiectivul este de a aloca fiecare articol unui container astfel încât numărul total de containere utilizate să fie minimizat. Se presupune că toate articolele au greutăți mai mici decât capacitatea containerului.
+
+Se da un sir de numere pozitive $a_1, \dots, a_n \le 1.$
+
+Se identifica $k \in \mathbb{N}$ și o funcție de asignare \[ f : \{1, \dots, n\} \to \{1, \dots, k\} \] astfel încât, pentru fiecare $j \in \{1, \dots, k\}$, să se verifice \[ \sum_{\substack{i = 1 \\ f(i) = j}}^{n} a_i \le 1, \] iar $k$ să fie minim posibil.
+
+\subsection{Heuristici pentru Bin Packing}
+
+\subsubsection{Ipoteza}
+Problema de bin packing este NP-hard, deci este improbabil să existe un algoritm polinomial care să producă întotdeauna soluția optimă.  
+Din acest motiv, folosim \emph{heuristici} care oferă soluții bune, de obicei apropiate de optim.
+
+\subsubsection{Algoritmul Next-Fit (NF)}
+
+\textbf{Idee:}
+\begin{itemize}
+	\item Fiecare obiect este încercat în \emph{bin-ul curent}.
+	\item Dacă încape, este plasat acolo.
+	\item Dacă nu încape, se deschide un bin nou.
+\end{itemize}
+
+\begin{center}
+	\textbf{Next Fit Packing}
+\end{center}
+
+\paragraph{Raport de aproximație pentru Next-Fit}
+
+Fie $M$ numărul minim de bin-uri necesare pentru o instanță $I$.
+
+\begin{theorem}
+	Algoritmul Next Fit folosește cel mult $2M$ bin-uri.
+\end{theorem}
+
+\begin{proof}
+	Fie $s(B_i)$ suma dimensiunilor obiectelor din bin-ul $B_i$ în soluția NF.  
+	Pentru orice doi biți consecutivi $B_j$ și $B_{j+1}$ avem:
+	
+	
+	\[
+	s(B_j) + s(B_{j+1}) > 1.
+	\]
+	
+	
+	Dacă NF folosește $k$ bin-uri (presupunem $k$ par), atunci:
+	
+	
+	\[
+	\sum_{i=1}^{k} s(B_i) > \frac{k}{2}.
+	\]
+	
+	
+	Dar suma totală a obiectelor este $\le M$, deci:
+	
+	
+	\[
+	\frac{k}{2} < M \quad \Rightarrow \quad k < 2M.
+	\]
+	
+	
+\end{proof}
+
+\paragraph{Limită inferioară pentru Next-Fit}
+
+Există secvențe de intrare pentru care Next Fit folosește $2M - 2$ bin-uri, unde $M$ este optimul.
+
+\medskip
+
+\subsection{Algoritmul First-Fit (FF)}
+
+\begin{itemize}
+	\item Se scanează bin-urile în ordine.
+	\item Obiectul este plasat în \emph{primul bin} în care încape.
+	\item Se creează un bin nou doar dacă nu încape în niciunul dintre cele existente.
+\end{itemize}
+
+\begin{center}
+	\textbf{First Fit Packing}
+\end{center}
+
+\subsubsection{Complexitate}
+\begin{itemize}
+	\item Implementare simplă: $O(n^2)$.
+	\item Implementare rapidă: $O(n \log n)$ folosind un arbore de căutare echilibrat.
+\end{itemize}
+
+\textbf{Structura nodului arborelui:}
+\begin{itemize}
+	\item indexul bin-ului,
+	\item capacitatea rămasă,
+	\item valoarea maximă din subarbore.
+\end{itemize}
+
+\subsubsection{Raport de aproximație pentru First-Fit}
+
+\begin{theorem}
+	Dacă $M$ este numărul optim de bin-uri, First Fit folosește cel mult $\lceil 1.7 M \rceil$ bin-uri.
+\end{theorem}
+
+Există secvențe pentru care First Fit folosește $1.6666\ldots M$ bin-uri.
+
+\subsubsection{Limită inferioară}
+
+Există cazuri în care First Fit folosește $10M$ bin-uri, în timp ce soluția optimă folosește doar $6M$.
+
+\subsection{Algoritmul Best-Fit (BF)}
+
+\textbf{Idee:}
+\begin{itemize}
+	\item Obiectul este plasat în bin-ul în care încape \emph{cel mai strâns} (adică rămâne cel mai puțin spațiu liber).
+	\item Dacă nu încape în niciun bin, se creează unul nou.
+\end{itemize}
+
+\textbf{Complexitate:} $O(n \log n)$ folosind un arbore echilibrat ordonat după capacitatea rămasă.
+
+\section{Heuristici derivate}
+
+\begin{itemize}
+	\item \textbf{First Fit Decreasing (FFD)}: se sortează obiectele descrescător, apoi se aplică FF.
+	\item \textbf{Best Fit Decreasing (BFD)}: se sortează obiectele descrescător, apoi se aplică BF.
+\end{itemize}
+
+\subsubsection{Exemple aplecatii practice}
+Nu există multe probleme de optimizare combinatorie a căror relevanță practică să fie mai evidentă. De exemplu, cea mai simplă versiune a problemei CuttingStock
+este echivalentă: ni se dau multe grinzi de lungime egală (să zicem 1 metru) și numere $a_1, ... ,a_n.$ Vrem să tăiem cât mai puține grinzi în bucăți, astfel încât la final să avem grinzi de lungimi $a_1, ... , a_n.$
+
+\subsection{Aplicarea problemei \textit{Bin Packing} la realizarea unui mix-tape}
+
+Problema realizării unui \emph{mix-tape} poate fi modelată în mod natural ca o instanță a problemei clasice de \textit{bin packing}. 
+În acest context:
+
+\begin{itemize}
+	\item fiecare melodie reprezintă un \emph{obiect} (item);
+	\item durata melodiei reprezintă \emph{greutatea} obiectului;
+	\item fiecare casetă (sau fiecare parte a casetei) reprezintă un \emph{bin};
+	\item capacitatea unui bin este durata maximă care poate fi înregistrată (de exemplu, 30 sau 60 de minute).
+\end{itemize}
+
+\subsubsection{Modelare formală}
+
+Fie o listă de melodii cu durate
+
+
+\[
+a_1, a_2, \dots, a_n, \qquad a_i > 0.
+\]
+
+
+
+Fiecare melodie trebuie plasată într-un bin (casetă) astfel încât suma duratelor din fiecare bin să nu depășească capacitatea $C$:
+
+
+\[
+\sum_{i : f(i) = j} a_i \le C, \qquad \forall j.
+\]
+
+
+
+Obiectivul este minimizarea numărului total de bin-uri:
+
+
+\[
+\min k.
+\]
+
+
+
+Aceasta este exact formularea problemei de \textit{bin packing}.
+
+\subsubsection{Interpretare intuitivă}
+
+Realizarea unui mix-tape presupune alegerea unui set de melodii care să încapă într-o durată fixă. 
+Dacă numărul melodiilor este mare sau dacă se dorește realizarea mai multor mixuri, apare necesitatea împărțirii lor în mai multe casete. 
+Astfel, problema devine:
+
+\begin{quote}
+	\emph{Cum putem împacheta melodiile în cât mai puține casete, fără a depăși durata maximă a fiecăreia?}
+\end{quote}
+
+\subsubsection{Heuristici utilizabile}
+
+Heuristicile clasice de bin packing se aplică direct:
+
+\begin{itemize}
+	\item \textbf{Next Fit}: se adaugă melodiile în caseta curentă până nu mai încape nimic, apoi se trece la următoarea.
+	\item \textbf{First Fit}: fiecare melodie este plasată în prima casetă în care încape.
+	\item \textbf{Best Fit}: melodia este plasată în caseta în care rămâne cel mai puțin spațiu liber după adăugare.
+	\item \textbf{First Fit Decreasing / Best Fit Decreasing}: melodiile sunt sortate descrescător după durată înainte de împachetare, ceea ce produce rezultate mult mai bune în practică.
+\end{itemize}
+
+\section{Reducerea Partition la Bin Packing (decizie)}
+
+\subsection{Problema Partition}
+
+Fie o mulțime $A$ de numere pozitive. Putem împărți $A$ în două submulțimi disjuncte $A_1$ și $A_2$ astfel încât:
+
+
+\[
+\sum_{a_i \in A_1} a_i = \sum_{a_j \in A_2} a_j?
+\]
+
+
+\section{Demonstrație NP-Hard}
+\subsection{Problema Bin Packing (decizie)}
+
+Fie o mulțime $B$ de $N$ elemente pozitive și o capacitate $C$. Putem distribui elementele în $K$ binuri astfel încât:
+
+
+\[
+\sum_{b_i \in B_j} b_i \le C, \quad \text{pentru fiecare bin } B_j?
+\]
+
+
+
+\subsection{Reducere}
+
+Construim o instanță de Bin Packing pornind de la Partition:
+
+\begin{itemize}
+	\item $B = A$ (elementele rămân neschimbate)
+	\item $C = \frac{\sum a_i}{2}$
+	\item $K = 2$
+\end{itemize}
+
+Dacă Partition are soluție, atunci există două submulțimi $A_1$ și $A_2$ cu sume egale:
+
+
+\[
+\sum_{a_i \in A_1} = \sum_{a_j \in A_2} = \frac{\sum a_k}{2}
+\]
+
+
+$\Rightarrow$ putem distribui elementele în două binuri de capacitate $C$ $\Rightarrow$ Bin Packing = TRUE.
+
+Analog, dacă Bin Packing are soluție cu $K = 2$ și $C = \frac{\sum a_i}{2}$, atunci cele două binuri sunt umplute exact $\Rightarrow$ sumele sunt egale $\Rightarrow$ Partition = TRUE.
+
+\subsection{Concluzie}
+
+
+
+\[
+\text{Partition} \le_p \text{Bin Packing (decizie)}
+\]
+
+
+
+---
+
+\section{Reducerea 3-Partition la Bin Packing (decizie)}
+
+\subsection{Problema 3-Partition}
+
+Fie o mulțime $A$ de numere pozitive, cu $|A| = 3N$. Putem împărți $A$ în $N$ triplete disjuncte astfel încât fiecare triplet să aibă aceeași sumă?
+
+
+
+\[
+S_{\text{triplet}} = \frac{\sum a_i}{N}
+\]
+
+
+
+\subsection{Construirea instanței de Bin Packing}
+
+\begin{itemize}
+	\item $B = A$
+	\item $C = \frac{\sum a_i}{N} = S_{\text{triplet}}$
+	\item $K = N = \frac{|B|}{3}$
+\end{itemize}
+
+\subsection{Implicație}
+
+Dacă 3-Partition are soluție $\Rightarrow$ putem grupa elementele în $N$ triplete de sumă $C$ $\Rightarrow$ fiecare triplet intră într-un bin $\Rightarrow$ Bin Packing are soluție cu $K = N$.
+
+Analog, dacă Bin Packing are soluție cu $K = N$ și capacitate $C$, iar suma totală este $N \cdot C$, atunci fiecare bin este umplut exact cu $C$ $\Rightarrow$ fiecare bin conține exact 3 elemente $\Rightarrow$ avem o soluție pentru 3-Partition.
+
+\subsection{Concluzie}
+
+
+
+\[
+\text{3-Partition} \le_p \text{Bin Packing (decizie)}
+\]
+
+
+
+\textbf{Bin Packing este NP-complet.}
+
+\end{document}
