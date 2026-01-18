@@ -12,6 +12,16 @@
 #define true 1
 #define false 0
 
+enum test_type {
+    UNIFORM,
+    WORST_CASE,
+    NEAR_HALF,
+    TRIVIAL,
+    TWO_CATEGORIES
+};
+
+// Source for citoa(): https://www.geeksforgeeks.org/c/implement-itoa/
+
 // A utility function to reverse a string
 void reverse(char str[], int length)
 {
@@ -66,6 +76,19 @@ char* citoa(int num, char* str, int base)
     return str;
 }
 
+void calculate_test_type_values(int *randoms, int *worst, int *half, int *two_cat) {
+
+}
+
+void rand_test_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int fd) {
+    int nr_of_packs = rand() % up_nrp + low_nrp;
+	int capacity = rand() % up_cap + low_cap;
+
+    dprintf(fd, "%d %d\n", nr_of_packs, capacity);
+    for(int j = 0; j < nr_of_packs; j ++)
+        dprintf(fd,"%d ", rand() % capacity + low_nrp);
+}
+
 
 int main() {
 	const char *path_to_tests_dir = "../tests/test";
@@ -87,25 +110,10 @@ int main() {
 			perror("open");
 			return 1;
 		}
-		int upper_bound_cap = 1e6;
-		int lower_bound_cap = 1;
+        // enum test_type type =
 
-		int upper_bound_nrp = 25;
-		int lower_bound_nrp = 5;
-
-		int nr_of_packs = rand() % upper_bound_nrp + lower_bound_nrp;
-		int capacity = rand() % upper_bound_cap + lower_bound_cap;
-
-		cap_and_nr_packs[0] = nr_of_packs;
-		cap_and_nr_packs[1] = capacity;
-
-		dprintf(fd, "%d %d\n", nr_of_packs, capacity);
-		for(int j = 0; j < nr_of_packs; j ++) {
-			packs_weight[j] = rand() % capacity + lower_bound_nrp;
-			dprintf(fd,"%d ", packs_weight[j]);
-		}
-		//close(fd);
-		//write(fd, (void *)p)
+        rand_test_generator(1e6, 1, 25, 5, fd);
+		close(fd);
     }
 	return 0;
 }
