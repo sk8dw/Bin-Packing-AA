@@ -7,7 +7,7 @@ void print_sols_all(vector<vector<bin>> sols);
 void print_sol(vector<bin> sol);
 vector<packet> convert_to_pack(int weights[], int n);
 int main() {
-    int n, cap, total_weight;
+    int n, cap, total_weight=0;
     bool valid = true;
     int weight[1000];
     ///do input reading and input validation + weight calculation
