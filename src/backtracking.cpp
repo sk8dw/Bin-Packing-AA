@@ -28,13 +28,8 @@ vector<bin> backtracking(int capacity, vector<packet> pack, bool (*prune_cond)(s
         }
 
         // Try placing the item
-<<<<<<< HEAD
         int weight = pack[curr.item_idx].weight;
-        
-=======
-        int weight = weights[curr.item_idx];
 
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
         // bin_idx == current_bins.size() means "Try opening a new bin"
         if (curr.bin_idx < (int)current_bins.size()) {
             // Try putting in existing bin
@@ -42,13 +37,8 @@ vector<bin> backtracking(int capacity, vector<packet> pack, bool (*prune_cond)(s
                 // SUCCESS: Place and move to next item
                 current_bins[curr.bin_idx].space_left -= weight;
                 current_bins[curr.bin_idx].packets.push_back({weight,curr.item_idx});
-<<<<<<< HEAD
-                
-                if (curr.item_idx == (int)pack.size() - 1) {
-=======
 
-                if (curr.item_idx == n - 1) {
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
+                if (curr.item_idx == (int)pack.size() - 1) {
                     //save_best_solution(current_bins, best_sol, min_bins);
                     if(current_bins.size() <= min_bins) {
                         min_bins = (int) current_bins.size();
@@ -67,13 +57,8 @@ vector<bin> backtracking(int capacity, vector<packet> pack, bool (*prune_cond)(s
         } else if (curr.bin_idx == (int)current_bins.size()) {
             // SUCCESS: Open new bin
             current_bins.push_back({capacity - weight, {{weight, curr.item_idx}}});
-<<<<<<< HEAD
-            
-            if (curr.item_idx == (int)pack.size() - 1) {
-=======
 
-            if (curr.item_idx == n - 1) {
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
+            if (curr.item_idx == (int)pack.size() - 1) {
                 ///save_best_solution(current_bins, best_sol, min_bins);
                 if(current_bins.size() <= min_bins) {
                     min_bins = (int) current_bins.size();
@@ -119,13 +104,8 @@ vector<vector<bin>> backtracking_all(int capacity, vector<packet> pack, bool (*p
         }
 
         // Try placing the item
-<<<<<<< HEAD
         int weight = pack[curr.item_idx].weight;
-        
-=======
-        int weight = weights[curr.item_idx];
 
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
         // bin_idx == current_bins.size() means "Try opening a new bin"
         if (curr.bin_idx < (int)current_bins.size()) {
             // Try putting in existing bin
@@ -133,13 +113,8 @@ vector<vector<bin>> backtracking_all(int capacity, vector<packet> pack, bool (*p
                 // SUCCESS: Place and move to next item
                 current_bins[curr.bin_idx].space_left -= weight;
                 current_bins[curr.bin_idx].packets.push_back({weight,curr.item_idx});
-<<<<<<< HEAD
-                
-                if (curr.item_idx == (int)pack.size() - 1) {
-=======
 
-                if (curr.item_idx == n - 1) {
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
+                if (curr.item_idx == (int)pack.size() - 1) {
                     //save_best_solution(current_bins, best_sol, min_bins);
                     if(current_bins.size() < min_bins) {
                         min_bins = (int) current_bins.size();
@@ -161,13 +136,8 @@ vector<vector<bin>> backtracking_all(int capacity, vector<packet> pack, bool (*p
         } else if (curr.bin_idx == (int)current_bins.size()) {
             // SUCCESS: Open new bin
             current_bins.push_back({capacity - weight, {{weight, curr.item_idx}}});
-<<<<<<< HEAD
-            
-            if (curr.item_idx == (int)pack.size() - 1) {
-=======
 
-            if (curr.item_idx == n - 1) {
->>>>>>> 1ca56c2 (Added initial implementation of test generator, no normal distributions)
+            if (curr.item_idx == (int)pack.size() - 1) {
                 ///save_best_solution(current_bins, best_sol, min_bins);
                 if(current_bins.size() < min_bins) {
                     min_bins = (int) current_bins.size();
