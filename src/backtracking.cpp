@@ -29,7 +29,7 @@ vector<bin> backtracking(int n, int capacity, int weights[], bool (*prune_cond)(
 
         // Try placing the item
         int weight = weights[curr.item_idx];
-        
+
         // bin_idx == current_bins.size() means "Try opening a new bin"
         if (curr.bin_idx < (int)current_bins.size()) {
             // Try putting in existing bin
@@ -37,7 +37,7 @@ vector<bin> backtracking(int n, int capacity, int weights[], bool (*prune_cond)(
                 // SUCCESS: Place and move to next item
                 current_bins[curr.bin_idx].space_left -= weight;
                 current_bins[curr.bin_idx].packets.push_back({weight,curr.item_idx});
-                
+
                 if (curr.item_idx == n - 1) {
                     //save_best_solution(current_bins, best_sol, min_bins);
                     if((int)current_bins.size() <= min_bins) {
@@ -46,7 +46,7 @@ vector<bin> backtracking(int n, int capacity, int weights[], bool (*prune_cond)(
                     }
                     // Undo to keep searching for even better ones
                     undo_move(current_bins, curr.bin_idx, weight);
-                    curr.bin_idx++; 
+                    curr.bin_idx++;
                 } else {
                     search_stack.push_back({curr.item_idx + 1, 0});
                 }
@@ -57,7 +57,7 @@ vector<bin> backtracking(int n, int capacity, int weights[], bool (*prune_cond)(
         } else if (curr.bin_idx == (int)current_bins.size()) {
             // SUCCESS: Open new bin
             current_bins.push_back({capacity - weight, {{weight, curr.item_idx}}});
-            
+
             if (curr.item_idx == n - 1) {
                 ///save_best_solution(current_bins, best_sol, min_bins);
                 if((int)current_bins.size() <= min_bins) {
@@ -93,7 +93,7 @@ vector<vector<bin>> backtracking_all(int n, int capacity, int weights[], bool (*
 
     while (!search_stack.empty()) {
         SearchState& curr = search_stack.back();
-        //std::cout<< curr.item_idx<< " " << curr.bin_idx<< " " << current_bins.size()<<endl;
+        std::cout<< curr.item_idx<< " " << curr.bin_idx<< " " << current_bins.size()<<endl;
         // PRUNING: If we already use more bins than our best solution, stop this branch
         if (prune_cond((int)current_bins.size(), min_bins, total_weight,(double) capacity)) {
             search_stack.pop_back();
@@ -105,7 +105,7 @@ vector<vector<bin>> backtracking_all(int n, int capacity, int weights[], bool (*
 
         // Try placing the item
         int weight = weights[curr.item_idx];
-        
+
         // bin_idx == current_bins.size() means "Try opening a new bin"
         if (curr.bin_idx < (int)current_bins.size()) {
             // Try putting in existing bin
@@ -113,7 +113,7 @@ vector<vector<bin>> backtracking_all(int n, int capacity, int weights[], bool (*
                 // SUCCESS: Place and move to next item
                 current_bins[curr.bin_idx].space_left -= weight;
                 current_bins[curr.bin_idx].packets.push_back({weight,curr.item_idx});
-                
+
                 if (curr.item_idx == n - 1) {
                     //save_best_solution(current_bins, best_sol, min_bins);
                     if((int)current_bins.size() < min_bins) {
@@ -125,7 +125,7 @@ vector<vector<bin>> backtracking_all(int n, int capacity, int weights[], bool (*
                     }
                     // Undo to keep searching for even better ones
                     undo_move(current_bins, curr.bin_idx, weight);
-                    curr.bin_idx++; 
+                    curr.bin_idx++;
                 } else {
                     search_stack.push_back({curr.item_idx + 1, 0});
                 }
@@ -136,7 +136,7 @@ vector<vector<bin>> backtracking_all(int n, int capacity, int weights[], bool (*
         } else if (curr.bin_idx == (int)current_bins.size()) {
             // SUCCESS: Open new bin
             current_bins.push_back({capacity - weight, {{weight, curr.item_idx}}});
-            
+
             if (curr.item_idx == n - 1) {
                 ///save_best_solution(current_bins, best_sol, min_bins);
                 if((int)current_bins.size() < min_bins) {
