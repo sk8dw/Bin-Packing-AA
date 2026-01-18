@@ -32,6 +32,12 @@ int main() {
         vector<bin> ffsol = first_fit(n,cap,packs);
         print_sol(ffsol);
         printf("---------------------------------\n");
+        vector<bin> bfdsol = best_fit_decreasing(n,cap,packs);
+        print_sol(bfdsol);
+        printf("---------------------------------\n");
+        vector<bin> bfsol = best_fit(n,cap,packs);
+        print_sol(bfsol);
+        printf("---------------------------------\n");
     }
     return 0;
 }

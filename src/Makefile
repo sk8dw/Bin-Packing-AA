@@ -1,5 +1,5 @@
 CPPFLAGS = -std=c++11 -Wall -g -c
-SRCS = main.cpp firstFit.cpp firstFitDecreasing.cpp backtracking.cpp packet_comp.cpp
+SRCS = main.cpp firstFit.cpp firstFitDecreasing.cpp backtracking.cpp packet_comp.cpp bestFit.cpp bestFitDecreasing.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: main benchmark
