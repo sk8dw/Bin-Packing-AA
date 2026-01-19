@@ -15,7 +15,8 @@ benchmark:
 	-Lbenchmark/build_mingw/src -lbenchmark -lshlwapi -lpthread -o bench.exe
 
 clean:
-	rm -f *.o *.exe
+	@if exist *.o del /q *.o
+	@if exist *.exe del /q *.exe
 
 ben:
 	.\bench.exe

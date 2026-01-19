@@ -22,20 +22,20 @@ int main() {
     if(!valid) {
         cout << "Invalid input!! The weight of all pachets must be smaller than the capacity of a bin!\n";
     } else {
-        vector<vector<bin>> sols = backtracking_all(n,cap,weight,fully_optimized_prune,total_weight);
+        vector<packet> packs = convert_to_pack(weight,n);
+        vector<vector<bin>> sols = backtracking_all_sort(cap,packs,fully_optimized_prune_all,total_weight);
         print_sols_all(sols);
         printf("---------------------------------\n");
-        vector<packet> packs = convert_to_pack(weight,n);
-        vector<bin> ffdsol = first_fit_decreasing(n,cap,packs);
+        vector<bin> ffdsol = first_fit_decreasing(cap,packs);
         print_sol(ffdsol);
         printf("---------------------------------\n");
-        vector<bin> ffsol = first_fit(n,cap,packs);
+        vector<bin> ffsol = first_fit(cap,packs);
         print_sol(ffsol);
         printf("---------------------------------\n");
-        vector<bin> bfdsol = best_fit_decreasing(n,cap,packs);
+        vector<bin> bfdsol = best_fit_decreasing(cap,packs);
         print_sol(bfdsol);
         printf("---------------------------------\n");
-        vector<bin> bfsol = best_fit(n,cap,packs);
+        vector<bin> bfsol = best_fit(cap,packs);
         print_sol(bfsol);
         printf("---------------------------------\n");
     }
