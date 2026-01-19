@@ -1,11 +1,11 @@
 #include "bin_packing.h"
 
-vector<bin> best_fit(int n, int cap, vector<packet> pack) {
+vector<bin> best_fit(int cap, vector<packet> pack) {
     vector<bin> bins;
     bool fit;
     int best_index;
     int remaining_space_after_fit;
-    for(int i = 0; i < n ; i++) {
+    for(size_t i = 0; i < pack.size() ; i++) {
         fit = false;
         best_index = -1;
         remaining_space_after_fit = cap + 1;

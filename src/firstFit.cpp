@@ -1,9 +1,9 @@
 #include "bin_packing.h"
 
-vector<bin> first_fit(int n, int cap, vector<packet> pack) {
+vector<bin> first_fit(int cap, vector<packet> pack) {
     vector<bin> bins;
     bool fit;
-    for(int i = 0; i < n ; i++) {
+    for(size_t i = 0; i < pack.size() ; i++) {
         fit = false;
         for(size_t j = 0; j < bins.size(); j++) {
             if(bins[j].space_left >= pack[i].weight) {
