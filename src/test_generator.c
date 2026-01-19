@@ -8,15 +8,19 @@
 #include <sys/stat.h>
 
 
-#define NR_OF_TESTS 10
+#define NR_OF_TESTS 25
 #define true 1
 #define false 0
 
 enum test_type {
     UNIFORM,
+    // worst case: sa nu existe perfect fits ()
     WORST_CASE,
+    // elemente centrate in C/2
     NEAR_HALF,
+    // simple tests
     TRIVIAL,
+    //
     TWO_CATEGORIES
 };
 
@@ -35,6 +39,7 @@ void reverse(char str[], int length)
         start++;
     }
 }
+
 // Implementation of citoa()
 char* citoa(int num, char* str, int base)
 {
@@ -76,10 +81,6 @@ char* citoa(int num, char* str, int base)
     return str;
 }
 
-void calculate_test_type_values(int *randoms, int *worst, int *half, int *two_cat) {
-
-}
-
 void rand_test_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int fd) {
     int nr_of_packs = rand() % up_nrp + low_nrp;
 	int capacity = rand() % up_cap + low_cap;
@@ -89,13 +90,71 @@ void rand_test_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int f
         dprintf(fd,"%d ", rand() % capacity + low_nrp);
 }
 
+void two_cat_test_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int fd) {
+    int nr_of_packs = rand() % up_nrp + low_nrp;
+	int capacity = rand() % up_cap + low_cap;
+
+    dprintf(fd, "%d %d\n", nr_of_packs, capacity);
+    int half = nr_of_packs / 2;
+    int max_first_half = capacity / 10 + 1;
+    int min_second_half = capacity / 3 + 1;
+    for(int j = 0; j < half; j ++)
+        dprintf(fd,"%d ", rand() % max_first_half + low_nrp);
+    for(int j = 0; j < nr_of_packs - half; j ++) {
+        int nr = rand();
+        dprintf(fd,"%d ", nr % capacity + min_second_half > capacity ? min_second_half : nr % capacity + min_second_half);
+    }
+
+}
+
+void near_half_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int fd) {
+    int nr_of_packs = rand() % up_nrp + low_nrp;
+	int capacity = rand() % up_cap + low_cap;
+
+    dprintf(fd, "%d %d\n", nr_of_packs, capacity);
+    int capacity_cpy = capacity;
+    int error_margin = 1;
+    while(capacity_cpy) {
+        capacity_cpy /= 100;
+        error_margin = error_margin * 10;
+    }
+    int half = capacity / 2;
+    for(int j = 0; j < nr_of_packs; j ++) {
+        int nr = rand();
+        if(j%2 == 0)
+            dprintf(fd,"%d ", half + nr % error_margin);
+        else
+            dprintf(fd,"%d ", half - nr % error_margin);
+    }
+}
+
+void generate_files(enum test_type t, const char **path_to_tests_dir) {
+    switch(t) {
+        case UNIFORM: {
+            *path_to_tests_dir = "../tests/random/test";
+            break;
+        }
+
+        case NEAR_HALF: {
+            *path_to_tests_dir = "../tests/near-half/test";
+            break;
+        }
+        case TWO_CATEGORIES: {
+            *path_to_tests_dir = "../tests/two-cat/test";
+            break;
+        }
+    }
+}
+
 
 int main() {
-	const char *path_to_tests_dir = "../tests/test";
+	const char *path_to_tests_dir;
 	srand(time(NULL));
 	int packs_weight[100];
 	int cap_and_nr_packs[2];
 
+    enum test_type type = UNIFORM;
+    generate_files(type, &path_to_tests_dir);
     for (int i = 0; i < NR_OF_TESTS; i++) {
         char filename[32];
         char filepath[64];
@@ -110,9 +169,45 @@ int main() {
 			perror("open");
 			return 1;
 		}
-        // enum test_type type =
-
         rand_test_generator(1e6, 1, 25, 5, fd);
+		close(fd);
+    }
+    type = TWO_CATEGORIES;
+    generate_files(type, &path_to_tests_dir);
+    for (int i = 0; i < NR_OF_TESTS; i++) {
+        char filename[32];
+        char filepath[64];
+
+        citoa(i, filename, 10);
+        strcat(filename, ".txt");
+        strcpy(filepath, path_to_tests_dir);
+        strcat(filepath, filename);
+
+		int fd = open(filepath, O_CREAT | O_TRUNC | O_RDWR, 0644);
+		if (fd < 0) {
+			perror("open");
+			return 1;
+		}
+        two_cat_test_generator(1e6, 1, 25, 5, fd);
+		close(fd);
+    }
+    type = NEAR_HALF;
+    generate_files(type, &path_to_tests_dir);
+    for (int i = 0; i < NR_OF_TESTS; i++) {
+        char filename[32];
+        char filepath[64];
+
+        citoa(i, filename, 10);
+        strcat(filename, ".txt");
+        strcpy(filepath, path_to_tests_dir);
+        strcat(filepath, filename);
+
+		int fd = open(filepath, O_CREAT | O_TRUNC | O_RDWR, 0644);
+		if (fd < 0) {
+			perror("open");
+			return 1;
+		}
+        near_half_generator(1e6, 1, 25, 5, fd);
 		close(fd);
     }
 	return 0;
