@@ -114,9 +114,13 @@ void near_half_generator(int up_cap, int low_cap, int up_nrp, int low_nrp, int f
     dprintf(fd, "%d %d\n", nr_of_packs, capacity);
     int capacity_cpy = capacity;
     int error_margin = 1;
-    while(capacity_cpy) {
-        capacity_cpy /= 100;
-        error_margin = error_margin * 10;
+    if (!capacity % 100)
+        error_margin = 10;
+    else {
+        while(capacity_cpy) {
+            capacity_cpy /= 100;
+            error_margin = error_margin * 10;
+        }
     }
     int half = capacity / 2;
     for(int j = 0; j < nr_of_packs; j ++) {
