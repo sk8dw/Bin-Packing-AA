@@ -11,7 +11,6 @@ int main() {
     int n, cap, total_weight=0;
     bool valid = true;
     int weight[1000];
-    ///do input reading and input validation + weight calculation
     cout << "Introduceti pe rand numarul de pachete, capacitatea si apoi greutatea pachetelor:\n";
     cin >> n >> cap;
     for(int i = 0; i < n; i++) {
