@@ -1,0 +1,11 @@
+2026-01-19T15:33:06+02:00
+Running C:\Users\Alex05\Documents\Analiza algoritmilor\Bin-Packing-AA\src\bench.exe
+Run on (16 X 2918 MHz CPU s)
+CPU Caches:
+  L1 Data 48 KiB (x8)
+  L1 Instruction 32 KiB (x8)
+  L2 Unified 1280 KiB (x8)
+  L3 Unified 24576 KiB (x1)
+dry_run: true
+name,iterations,real_time,cpu_time,time_unit,bytes_per_second,items_per_second,label,error_occurred,error_message
+"BM_test",1,668300,0,ns,,,,,

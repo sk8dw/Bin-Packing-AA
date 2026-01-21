@@ -162,13 +162,13 @@ vector<vector<bin>> backtracking_all(int capacity, vector<packet> pack, bool (*p
     return best_sols;
 }
 
-vector<vector<bin>> backtracking_all_sort(int capacity, vector<packet> pack, bool (*prune_cond)(size_t, size_t, double, double), double total_weight) {
-    sort(pack.begin(), pack.end(),compare_packs_incr);
+vector<vector<bin>> backtracking_all_sort(int capacity, vector<packet> pack, bool (*prune_cond)(size_t, size_t, double, double), double total_weight, bool (*compare_packs)(packet A, packet B)) {
+    sort(pack.begin(), pack.end(),compare_packs);
     return backtracking_all(capacity,pack,prune_cond,total_weight);
 }
 
-vector<bin> backtracking_sort(int capacity, vector<packet> pack, bool (*prune_cond)(size_t, size_t, double, double), double total_weight) {
-    sort(pack.begin(), pack.end(),compare_packs_incr);
+vector<bin> backtracking_sort(int capacity, vector<packet> pack, bool (*prune_cond)(size_t, size_t, double, double), double total_weight, bool (*compare_packs)(packet A, packet B)) {
+    sort(pack.begin(), pack.end(),compare_packs);
     return backtracking(capacity,pack,prune_cond,total_weight);
 }
 

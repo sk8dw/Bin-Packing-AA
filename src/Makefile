@@ -10,7 +10,7 @@ main: $(OBJS)
 %.o: %.cpp
 	g++ $(CPPFLAGS) $< -o $@
 
-benchmark:
+benchmark: bench.cpp
 	g++ bench.cpp $(filter-out main.o, $(OBJS)) -std=c++11 -DBENCHMARK_STATIC_DEFINE -isystem benchmark/include \
 	-Lbenchmark/build_mingw/src -lbenchmark -lshlwapi -lpthread -o bench.exe
 

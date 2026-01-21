@@ -1,17 +1,34 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
 #include "bin_packing.h"
 #include "benchmark/benchmark.h"
 
 using namespace std;
 
-static void BM_test(benchmark::State& state) {
-    int x = 0;
-    for (auto _ : state) {
-        cout<<1<<endl;
-        int result = 1;
-        benchmark::DoNotOptimize(result);
+struct Tests {
+    string name;
+    int cap;
+    vector<packet> packs;
+    double total_weight;
+};
+
+vector<Tests> tests;
+
+void load_from_path(char* path) {
+    string full_path[100] = {0};
+    for(int i = 0; i < 25 ; i++) {
+        strcpy(full_path, path);
+        str
+        ifstream fin(path + i +".txt");
+
     }
 }
-BENCHMARK(BM_test);
 
-BENCHMARK_MAIN();
+void Load_tests() {
+    char path[50] = {0};
+    strcpy(path,"tests\\near-half\\test\0");
+
+}
+
+
