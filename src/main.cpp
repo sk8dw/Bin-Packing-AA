@@ -1,4 +1,4 @@
-#include <iostream>
+#include <fstream>
 #include <cstdio>
 #include "bin_packing.h"
 using namespace std;
@@ -7,6 +7,7 @@ void print_sols_all(vector<vector<bin>> sols);
 void print_sol(vector<bin> sol);
 vector<packet> convert_to_pack(int weights[], int n);
 int main() {
+    ifstream cin("..\\tests\\random\\test13.txt");
     int n, cap, total_weight=0;
     bool valid = true;
     int weight[1000];
@@ -23,10 +24,11 @@ int main() {
         cout << "Invalid input!! The weight of all pachets must be smaller than the capacity of a bin!\n";
     } else {
         vector<packet> packs = convert_to_pack(weight,n);
-        vector<vector<bin>> sols = backtracking_all_sort(cap,packs,fully_optimized_prune_all,total_weight);
+        vector<vector<bin>> sols = backtracking_all_sort(cap,packs,fully_optimized_prune_all,total_weight,compare_packs_incr);
         print_sols_all(sols);
         printf("---------------------------------\n");
         vector<bin> ffdsol = first_fit_decreasing(cap,packs);
+        printf("%lld\n",ffdsol.size());
         print_sol(ffdsol);
         printf("---------------------------------\n");
         vector<bin> ffsol = first_fit(cap,packs);
@@ -40,6 +42,7 @@ int main() {
         printf("---------------------------------\n");
     }
     return 0;
+    cin.close();
 }
 
 void print_sols_all(vector<vector<bin>> sols) {
