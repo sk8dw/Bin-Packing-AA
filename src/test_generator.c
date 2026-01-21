@@ -18,9 +18,7 @@ enum test_type {
     WORST_CASE,
     // elemente centrate in C/2
     NEAR_HALF,
-    // simple tests
-    TRIVIAL,
-    //
+    // jumatate din elemente mici, cealalta jumatate mari
     TWO_CATEGORIES
 };
 
