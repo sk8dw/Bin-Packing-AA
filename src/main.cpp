@@ -15,7 +15,7 @@ int main() {
     cin >> n >> cap;
     for(int i = 0; i < n; i++) {
         cin >> weight[i];
-        if(weight[i] > cap) 
+        if(weight[i] > cap)
             valid = false;
         total_weight += weight[i];
     }
