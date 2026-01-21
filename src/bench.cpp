@@ -21,15 +21,13 @@ void load_from_path(const string& path) {
     char num[5] = {0};
     int n,w;
     for(int i = 0; i < 25 ; i++) {
-        Tests t; // Fresh object for every file
+        Tests t; 
         t.total_weight = 0;
         
-        // Build path: tests/folder/test + i + .txt
         sprintf(full_path, "%s%d.txt", path.c_str(), i);
         
         ifstream fin(full_path);
-        if (!fin) continue; // Skip if file doesn't exist
-
+        if (!fin) continue;
         fin >> n >> t.cap;
         for(int j = 0; j < n; j++) {
             fin >> w;
@@ -55,16 +53,12 @@ void Load_tests() {
     load_from_path(path);
 }
 
-
-
-
-// --- The Universal Template Wrapper ---
 template <typename Func>
 void BM_PackingWrapper(benchmark::State& state, Func algo_call, int packet_count) {
     int last_bins = 0;
     for (auto _ : state) {
         auto result = algo_call();
-        last_bins = result.size(); // Store it here
+        last_bins = result.size();
         benchmark::DoNotOptimize(result);
     }
     state.counters["Bins"] = last_bins;
@@ -72,7 +66,6 @@ void BM_PackingWrapper(benchmark::State& state, Func algo_call, int packet_count
 }
 
 int main(int argc, char** argv) {
-    // 1. Setup Test Data (In real code, load your folders here)
     Load_tests();
     char buff[200];
     for (auto& test : tests) {
@@ -80,7 +73,6 @@ int main(int argc, char** argv) {
         auto& w = test.packs;
         double total = test.total_weight;
 
-        // --- HEURISTICS ---
         strcpy(buff,"FirstFit\\");
         strcat(buff,test.name);
         benchmark::RegisterBenchmark(buff, 
@@ -106,11 +98,8 @@ int main(int argc, char** argv) {
                 return best_fit_decreasing(cap, w);
             }, test.packs.size());
 
-        // --- BACKTRACKING VARIATIONS ---
 
-        if (w.size() <= 21) { // Safety guard for Backtracking
-            
-            // 1. Not Sorted (Original Order)
+        if (w.size() <= 21) {
             strcpy(buff,"Backtracking_Unsorted_no_prune\\");
             strcat(buff,test.name);
             benchmark::RegisterBenchmark(std::string(buff), 
@@ -129,7 +118,6 @@ int main(int argc, char** argv) {
                 BM_PackingWrapper<std::function<vector<bin>()>>, [=]() {
                     return backtracking(cap,test.packs,fully_optimized_prune,test.total_weight);
                 }, test.packs.size());
-            // 2. Sorted Descending (Largest to Smallest - Usually Fastest)
             strcpy(buff,"Backtracking_Sorted_asc_no_prune\\");
             strcat(buff,test.name);
             benchmark::RegisterBenchmark(string(buff), 
@@ -148,7 +136,6 @@ int main(int argc, char** argv) {
                 BM_PackingWrapper<std::function<vector<bin>()>>, [=]() {
                     return backtracking_sort(cap,test.packs,fully_optimized_prune,test.total_weight,compare_packs_incr);
                 }, test.packs.size());
-            // 3. Sorted Ascending (Smallest to Largest - Usually Slowest)
             strcpy(buff,"Backtracking_Sorted_desc_no_prune\\");
             strcat(buff,test.name);
             benchmark::RegisterBenchmark(string(buff), 
