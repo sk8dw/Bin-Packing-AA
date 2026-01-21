@@ -6,7 +6,7 @@
 #include <algorithm>
 using namespace std;
 struct packet {
-    int weight;
+    int weight ;
     int index;
 };
 struct bin {

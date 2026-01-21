@@ -6,6 +6,9 @@ struct SearchState {
 };
 void undo_move(vector<bin>& bins, int bin_idx, int weight);
 void backtrack_last_item(vector<bin>& bins, vector<SearchState>& stack, vector<packet> pack);
+
+
+
 vector<bin> backtracking(int capacity, vector<packet> pack, bool (*prune_cond)(size_t, size_t, double, double), double total_weight) {
     vector<bin> current_bins;
     vector<bin> best_sol;
