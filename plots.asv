@@ -1,0 +1,141 @@
+filename = 'stats.csv';
+T = readtable(filename); 
+T(:, ["time_unit", "bytes_per_second", "items_per_second", "label", "error_message", "error_occurred"]) = [];
+T = sortrows(T, 'name');
+% isBacktracking = contains(T.name, 'Backtracking');
+% isSorted       = isBacktracking & contains(T.name, 'Soreted');
+% isUnsorted     = isBacktracking & contains(T.name, 'Unsoreted');
+% 
+% isHeuristic   = ~isBacktracking;
+% isFFD = contains(T.name, 'FirstFitDecreasing');
+% isFF = contains(T.name, 'FirstFit\');
+% isBFD = contains(T.name, 'BestFitDecreasing');
+% isBF = contains(T.name, 'BestFit\');
+% 
+% figure
+% hold on
+% 
+% scatter(T.Packets(isFFD), ...
+%         T.real_time(isFFD), ...
+%         40, 'b', 'o', 'filled')
+% 
+% scatter(T.Packets(isBFD), ...
+%         T.real_time(isBFD), ...
+%         40, 'black', 'o', 'filled')
+% 
+% scatter(T.Packets(isFF), ...
+%         T.real_time(isFF), ...
+%         40, 'magenta', 'o', 'filled')
+% 
+% scatter(T.Packets(isBF), ...
+%         T.real_time(isBF), ...
+%         40, 'yellow', 'o', 'filled')
+% 
+% scatter(T.Packets(isUnsorted), ...
+%         T.real_time(isUnsorted), ...
+%         40, 'r', '^', 'filled')
+% 
+% scatter(T.Packets(isSorted), ...
+%         T.real_time(isSorted), ...
+%         40, 'g', 's', 'filled')
+% 
+% set(gca, 'XScale', 'log', 'YScale', 'log')
+% 
+% xlabel('Iterations')
+% ylabel('Real Time')
+% legend('FFD', 'BFD', 'FF', 'BF', 'Backtracking (Unsorted)', 'Backtracking (Sorted)')
+% grid on
+% 
+% isSorted = contains(T.name, 'Backtracking_Soreted');
+% 
+% noPrune     = isSorted & contains(T.name, 'no_prune');
+% betterPrune = isSorted & contains(T.name, 'better_prune');
+% bestPrune   = isSorted & contains(T.name, 'best_prune');
+% 
+% figure
+% hold on
+% 
+% scatter(T.Packets(noPrune),     T.real_time(noPrune),     50, 'r', 'x')
+% scatter(T.Packets(betterPrune), T.real_time(betterPrune), 50, 'g', 'o', 'filled')
+% scatter(T.Packets(bestPrune),   T.real_time(bestPrune),   50, 'k', 's', 'filled')
+% 
+% set(gca,'XScale','log','YScale','log')
+% xlabel('Packets')
+% ylabel('Real Time')
+% title('Sorted Backtracking: Pruning Comparison')
+% legend('No prune','Better prune','Best prune')
+% grid on
+% 
+% BTUnoprune = contains(T.name, 'Backtracking_Unsoreted_no');
+% BTUbestprune = contains(T.name, 'Backtracking_Unsoreted_best');
+% BTUbetterprune = contains(T.name, 'Backtracking_Unsoreted_better');
+% 
+% figure
+% hold on
+% scatter(T.Packets(BTUnoprune), T.real_time(BTUnoprune), ...
+%         50, 'm', '^', 'filled')
+% scatter(T.Packets(BTUbestprune), T.real_time(BTUbestprune), ...
+%         50, 'blue', '^', 'filled')
+% scatter(T.Packets(BTUbetterprune), T.real_time(BTUbetterprune), ...
+%         50, 'yellow', '^', 'filled')
+% 
+% set(gca,'XScale','log','YScale','log')
+% xlabel('Packets')
+% ylabel('Real Time')
+% legend('No Prune', 'Best Prune', 'Better Prune')
+% title('Unsorted Backtracking')
+% grid on
+% 
+% 
+% isBacktracking = contains(T.name, 'Backtracking');
+% isHeuristic    = ~isBacktracking;
+% 
+% figure
+% hold on
+% scatter(T.Packets(isFFD), ...
+%         T.real_time(isFFD), ...
+%         40, 'b', 'o', 'filled')
+% 
+% scatter(T.Packets(isBFD), ...
+%         T.real_time(isBFD), ...
+%         40, 'black', 'o', 'filled')
+% 
+% scatter(T.Packets(isFF), ...
+%         T.real_time(isFF), ...
+%         40, 'magenta', 'o', 'filled')
+% 
+% scatter(T.Packets(isBF), ...
+%         T.real_time(isBF), ...
+%         40, 'yellow', 'o', 'filled')
+% 
+% %set(gca,'XScale','log','YScale','log')
+% xlabel('Packets')
+% ylabel('Real Time')
+% legend('FFD', 'BFD', 'FF', 'BF')
+% title('Heuristics')
+% grid on
+% 
+% 
+% x = T.Packets(isHeuristic);
+% y = T.real_time(isHeuristic);
+% 
+% [xs, idx] = sort(x);
+% ys = y(idx);
+% 
+% figure
+% hold on
+% scatter(x, y, 40, 'b', 'filled')
+% plot(xs, ys, 'b-', 'LineWidth', 1.5)
+% 
+% set(gca,'XScale','log','YScale','log')
+% xlabel('Packets')
+% ylabel('Real Time')
+% title('Heuristics')
+% grid on
+
+
+R = contains(T.name, 'test10.txt');
+RTRUE = T(R, :);
+
+
+head(T)
