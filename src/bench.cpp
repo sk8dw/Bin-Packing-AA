@@ -34,7 +34,7 @@ void load_from_path(const string& path) {
             t.packs.push_back({w, j});
             t.total_weight += w;
         }
-
+ 
         cout << endl;
         strcpy(t.name,full_path+6);
         
