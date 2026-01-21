@@ -8,6 +8,8 @@
 *.synctex.gz
 *.pdf
 *.o
+*.exe
+.vscode
 benchmark
 benchmark/*
 src/bcgem.cpp
